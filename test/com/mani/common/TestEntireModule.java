@@ -1,0 +1,38 @@
+package com.mani.common;
+
+import com.mani.accounts.Current;
+import com.mani.accounts.Savings;
+import com.mani.users.User;
+import junit.framework.TestCase;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: Subramaniam S
+ * Date: 9/25/13
+ * Time: 2:58 AM
+ */
+public class TestEntireModule extends TestCase
+{
+	public void testCreateUser() throws Exception
+	{
+		// Enrolling 2 new users in common
+		User user1 = new User("Subramaniam", "Srinivasan", "Bangalore", 9480200530L);
+		User user2 = new User("Mani", "S", "Kanyakumari", 9480200530L);
+
+		// User1 is interested to open savings & current account
+		user1.addAccount(new Savings(user1));
+		user1.addAccount(new Current(user1));
+
+		// User2 is interested to open only savings account
+		user2.addAccount(new Savings(user2));
+
+		// User1 & User2 Deposits 5000 to their savings account number SA_1 & SA_2 respectively
+		assertEquals(true, user1.getAccount("SA_1").deposit(5000));
+		assertEquals(true, user2.getAccount("SA_2").deposit(5000));
+
+		// User1 withdraws 2500 from his Savings & Current account number SA_1 & CU_1 respectively
+		assertEquals(true, user1.getAccount("SA_1").withdraw(2500));
+		assertEquals(false, user1.getAccount("CU_1").withdraw(2500));
+
+	}
+}
