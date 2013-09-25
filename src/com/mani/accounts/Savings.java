@@ -1,5 +1,8 @@
 package com.mani.accounts;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.Date;
 
 import com.mani.common.Constant;
@@ -10,6 +13,8 @@ import com.mani.users.User;
  * User: Subramaniam S
  * Date: 9/24/13
  * Time: 11:18 PM
+ *
+ * Savings account will implement its own way to generate account number and minimum balance
  */
 public class Savings extends Account
 {
@@ -39,11 +44,6 @@ public class Savings extends Account
 	public long getMinimumBalance()
 	{
 		return Constant.SAVINGS_ACCOUNT_MIN_BAL;
-	}
-
-	@Override
-	public void generateReport()
-	{
 	}
 
 	@Override

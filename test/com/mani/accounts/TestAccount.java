@@ -43,6 +43,8 @@ public class TestAccount extends TestCase
 
 		// Testing Transaction History
 		assertEquals(3, savings.getTransactionHistory().size());
+		savings.generateReport();
+		current.generateReport();
 	}
 
 	public void testGetAccountBalance() throws Exception

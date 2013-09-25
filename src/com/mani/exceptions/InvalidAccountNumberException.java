@@ -5,6 +5,8 @@ package com.mani.exceptions;
  * User: Subramaniam S
  * Date: 9/25/13
  * Time: 5:02 AM
+ *
+ * If user gives Invalid Account number for doing transaction then InvalidAccountNumberException will raise
  */
 public class InvalidAccountNumberException extends Exception
 {

@@ -12,6 +12,8 @@ import com.mani.users.User;
  * User: Subramaniam S
  * Date: 9/25/13
  * Time: 12:29 AM
+ *
+ * Bank class includes method to get and add Users to bank also have method to transfer money across banks
  */
 public class Bank implements ManiBank
 {
@@ -46,6 +48,9 @@ public class Bank implements ManiBank
 		this.users.add(users);
 	}
 
+	/**
+	 * Money Transfer can be done across banks. So implementing Transfer in Bank but not in account
+	 * */
 	public boolean doTransfer(Account source, Account destination, long amountToTransfer)
 	{
 		if(source.withdraw(amountToTransfer + getServiceCharge(destination, amountToTransfer)))
@@ -62,6 +67,9 @@ public class Bank implements ManiBank
 			return false;
 	}
 
+	/**
+	 * If destination account is from other than Mani Bank (InterBank Transfer)
+	 * */
 	public int getServiceCharge(Account destination, long amountToTransfer)
 	{
 		if(destination instanceof ManiBank)

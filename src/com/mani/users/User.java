@@ -11,6 +11,12 @@ import com.mani.exceptions.InvalidAccountNumberException;
  * User: Subramaniam S
  * Date: 9/24/13
  * Time: 10:24 PM
+ *
+ * User is a generic class which holds all User information.
+ * In future users like NRI User, Senior Citizen User can extend this class and implement its own behaviour.
+ *
+ * User object is one-to-many relationship with Accounts
+ * User can hold multiple type of accounts
  */
 public class User
 {

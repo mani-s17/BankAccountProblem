@@ -1,5 +1,8 @@
 package com.mani.accounts;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Stack;
@@ -12,17 +15,16 @@ import com.mani.users.User;
  * User: Subramaniam S
  * Date: 9/24/13
  * Time: 11:22 PM
+ *
+ * Account class is a abstract for all type of accounts, which implements common behaviour across accounts
+ * like withdraw, deposit, generate reports. Also it provides a hook for implementing specific behaviour
+ * like account number, minimum balance and user details.
  */
 public abstract class Account implements ManiBank
 {
 	private long accountBalance;
-
-	public SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 	private Stack<String> history = new Stack<String>();
-
-	public Account()
-	{
-	}
+	public SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
 	public boolean withdraw(long amount)
 	{
@@ -65,34 +67,32 @@ public abstract class Account implements ManiBank
 		history.push(message);
 	}
 
+	public void generateReport()
+	{
+		File reportsDir = new File("reports");
+		if (!reportsDir.exists())
+			reportsDir.mkdir();
+		File report = new File(reportsDir.getAbsolutePath() + File.separator + this.getAccountNumber() + "_" + new Date().getTime() + ".txt");
+		try
+		{
+			FileWriter writer = new FileWriter(report);
+			BufferedWriter out = new BufferedWriter(writer);
+			while(!this.getTransactionHistory().isEmpty())
+			{
+				out.write(this.getTransactionHistory().pop());
+				out.write("\n");
+			}
+			out.close();
+		}
+		catch (Exception e)
+		{
+			System.err.println("Error: " + e.getMessage());
+		}
+	}
+
 	public abstract String getAccountNumber();
 
 	public abstract long getMinimumBalance();
 
 	public abstract User getUser();
-
-	public abstract void generateReport();
-
-	@Override
-	public boolean equals(Object object)
-	{
-		boolean result = false;
-		if (object == null || object.getClass() != getClass())
-			result = false;
-		else
-		{
-			Account account = (Account) object;
-			if (this.getAccountNumber() == account.getAccountNumber())
-				result = true;
-		}
-		return result;
-	}
-
-	// just omitted null checks
-	@Override
-	public int hashCode() {
-		int hash = 3;
-		hash = 7 * hash + this.getAccountNumber().hashCode();
-		return hash;
-	}
 }

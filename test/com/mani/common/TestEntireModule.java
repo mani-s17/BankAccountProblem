@@ -1,5 +1,7 @@
 package com.mani.common;
 
+import com.mani.accounts.Account;
+import com.mani.accounts.Checking;
 import com.mani.accounts.Current;
 import com.mani.accounts.Savings;
 import com.mani.users.User;
@@ -20,19 +22,22 @@ public class TestEntireModule extends TestCase
 		User user2 = new User("Mani", "S", "Kanyakumari", 9480200530L);
 
 		// User1 is interested to open savings & current account
-		user1.addAccount(new Savings(user1));
-		user1.addAccount(new Current(user1));
+		Account savings = new Savings(user1);
+		Account checking = new Checking(user2);
+		user1.addAccount(savings);
+		user1.addAccount(checking);
 
 		// User2 is interested to open only savings account
-		user2.addAccount(new Savings(user2));
+		Account current = new Current(user2);
+		user2.addAccount(current);
 
 		// User1 & User2 Deposits 5000 to their savings account number SA_1 & SA_2 respectively
-		assertEquals(true, user1.getAccount("SA_1").deposit(5000));
-		assertEquals(true, user2.getAccount("SA_2").deposit(5000));
+		assertEquals(true, user1.getAccount(savings.getAccountNumber()).deposit(5000));
+		assertEquals(true, user2.getAccount(current.getAccountNumber()).deposit(5000));
 
 		// User1 withdraws 2500 from his Savings & Current account number SA_1 & CU_1 respectively
-		assertEquals(true, user1.getAccount("SA_1").withdraw(2500));
-		assertEquals(false, user1.getAccount("CU_1").withdraw(2500));
+		assertEquals(true, user1.getAccount(savings.getAccountNumber()).withdraw(2500));
+		assertEquals(false, user1.getAccount(checking.getAccountNumber()).withdraw(2500));
 
 	}
 }

@@ -10,16 +10,19 @@ import com.mani.users.User;
  * User: Subramaniam S
  * Date: 9/25/13
  * Time: 2:11 AM
+ *
+ * Current account will implement its own way to generate account number and minimum balance
  */
 public class Current extends Account
 {
-	private static int accountNumber;
-
+	private static int counter;
+	private String accountNumber;
 	private User user;
 
 	public Current(User user)
 	{
-		++accountNumber;
+		++counter;
+		this.accountNumber = Constant.CURRENT_ACCOUNT + counter;
 		this.user = user;
 		String message =  user.getFirstName() + " Opened Current account - Account number " + getAccountNumber() + ", with balance " + Constant.CURRENT_ACCOUNT_MIN_BAL + " at " + dateFormat.format(new Date());
 		setTransactionHistory(message);
@@ -30,18 +33,13 @@ public class Current extends Account
 	@Override
 	public String getAccountNumber()
 	{
-		return Constant.CURRENT_ACCOUNT + accountNumber;
+		return accountNumber;
 	}
 
 	@Override
 	public long getMinimumBalance()
 	{
 		return Constant.CURRENT_ACCOUNT_MIN_BAL;
-	}
-
-	@Override
-	public void generateReport()
-	{
 	}
 
 	@Override

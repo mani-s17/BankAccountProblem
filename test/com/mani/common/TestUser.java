@@ -1,6 +1,7 @@
 package com.mani.common;
 
 import com.mani.accounts.Savings;
+import com.mani.exceptions.InvalidAccountNumberException;
 import com.mani.users.User;
 import junit.framework.TestCase;
 
@@ -54,7 +55,31 @@ public class TestUser extends TestCase
 		user.addAccount(savings);
 		assertEquals(1, user.getAccounts().size());
 		assertEquals(savings, user.getAccount(savings.getAccountNumber()));
-		assertEquals(null, user.getAccount("CU_1"));
-		assertEquals(false, user.deposit("CU_2", 5000));
+	}
+
+	public void testWithdraw() throws Exception
+	{
+		try
+		{
+			user.withdraw("SA_2", 100);
+			user.withdraw("CU_2", 5000);
+			assertTrue("Expecting excpetion but not occured", false);
+		}
+		catch (InvalidAccountNumberException e)
+		{
+		}
+	}
+
+	public void testDeposit() throws Exception
+	{
+		try
+		{
+			user.deposit("SA_2", 1000);
+			user.deposit("CU_2", 5000);
+			assertTrue("Expecting excpetion but not occured", false);
+		}
+		catch (InvalidAccountNumberException e)
+		{
+		}
 	}
 }

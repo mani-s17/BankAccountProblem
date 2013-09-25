@@ -5,6 +5,8 @@ package com.mani.common;
  * User: Subramaniam S
  * Date: 9/25/13
  * Time: 3:36 AM
+ *
+ * Constant class contains all Constants which are used for Bank and its related entities
  */
 public class Constant
 {
